@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -34,17 +35,37 @@ public class MainActivity extends AppCompatActivity {
 
     private WebView mWebView;
 
+    Button button;
+    String LOG_TAG = "MainActivityTag";
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Log.d(LOG_TAG,"onCreate");
 
         mWebView = (WebView) findViewById(R.id.webView);
         // включаем поддержку JavaScript
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.setWebViewClient(new MyWebViewClient());
         // указываем страницу загрузки
+
+        mWebView.addJavascriptInterface(new MyJavaScriptInterface(), "HTMLOUT");
+
+
         mWebView.loadUrl("https://zf.fm/");
 
+
+        button = (Button) findViewById(R.id.button);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Log.d(LOG_TAG,"onClick");
+
+
+            }
+        });
     }
 
     private class MyWebViewClient extends WebViewClient
@@ -54,6 +75,24 @@ public class MainActivity extends AppCompatActivity {
         {
             view.loadUrl(url);
             return true;
+        }
+        @Override
+        public void onPageFinished(WebView view, String url)
+        {
+            Log.d(LOG_TAG,"onPageFinished");
+
+        /* This call inject JavaScript into the page which just finished loading. */
+            mWebView.loadUrl("javascript:window.HTMLOUT.processHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
+        }
+    }
+
+    class MyJavaScriptInterface
+    {
+        @JavascriptInterface
+        @SuppressWarnings("unused")
+        public void processHTML(String html)
+        {
+            Log.d(LOG_TAG,html);
         }
     }
 }
