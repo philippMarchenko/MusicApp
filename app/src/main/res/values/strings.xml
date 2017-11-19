@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">MusicApp</string>
+
+    <!-- Accessibility button description -->
+    <string name="btn_play">Play</string>
+    <!-- Accessibility button description -->
+    <string name="btn_pause">Pause</string>
+    <!-- Accessibility button description -->
+    <string name="btn_play_pause">Play/Pause</string>
+    <!-- Accessibility button description -->
+    <string name="btn_skip">Skip</string>
+    <!-- Accessibility button description -->
+    <string name="btn_prev">Previous</string>
+    <!-- Accessibility button description -->
+    <!-- Accessibility button description -->
+    <string name="btn_close">Close</string>
 </resources>
