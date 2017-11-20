@@ -7,12 +7,13 @@
     android:layout_height="@dimen/mini_player_height"
     android:background="?colorPrimary"
     android:elevation="4dp"
+
    >
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:alpha="0.15"
-        android:src="@color/white"/>
+        android:src="@color/colorWhite"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -78,16 +79,19 @@
             android:layout_alignParentTop="true"
             android:src="@drawable/card_shadow"/>
 
-        <com.devphill.musicapp.ui.view.PlayPauseView
+        <com.ohoussein.playpause.PlayPauseView
             android:id="@+id/mini_play"
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="4dp"
-            android:background="?attr/circular_ripple"
             android:contentDescription="@string/btn_play"
-            android:padding="40dp"/>
+            android:padding="40dp"
+            android:clickable="true"
+            android:foreground="?android:selectableItemBackground"
+            app:fill_color="@color/colorWhite"
+            app:pause_bg="@color/colorPrimary"
+            app:play_bg="@color/colorPrimary"/>
     </RelativeLayout>
 
 

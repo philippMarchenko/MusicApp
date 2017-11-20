@@ -12,9 +12,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.devphill.musicapp.R;
-import com.devphill.musicapp.ui.view.PlayPauseView;
+import com.devphill.musicapp.model.Song;
+import com.devphill.musicapp.ui.view.PlayerViewAdapter;
+import com.ohoussein.playpause.PlayPauseView;
 
 
 import butterknife.BindView;
@@ -28,7 +31,7 @@ public class MiniPlayerFragment extends Fragment {
 
     View rootView;
 
-   /* @BindView(R.id.mini_play)
+    @BindView(R.id.mini_play)
     PlayPauseView playPauseView;
 
     @BindView(R.id.progressbar)
@@ -41,7 +44,7 @@ public class MiniPlayerFragment extends Fragment {
     TextView artistName;
 
     @BindView(R.id.mini_album_artwork)
-    ImageView miniArtwork;*/
+    ImageView miniArtwork;
 
 
     private Unbinder unbinder;
@@ -50,25 +53,19 @@ public class MiniPlayerFragment extends Fragment {
 
     }
 
-    public static MiniPlayerFragment newInstance() {
-        MiniPlayerFragment fragment = new MiniPlayerFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         rootView = inflater.inflate(R.layout.fragment_mini_player, container, false);
 
         unbinder = ButterKnife.bind(this, rootView);
+
+        artistName.setText("50 cent");
+        trackName.setText("Candy Shop");
+        miniArtwork.setImageResource(R.drawable.candy_shop);
+
+
+        rootView.setOnTouchListener(new OnSwipeTouchListener(getActivity()));
 
       /*  rootView.setOnClickListener(v -> {
             MultiSheetView multiSheetView = MultiSheetView.getParentMultiSheetView(rootView);
@@ -76,15 +73,15 @@ public class MiniPlayerFragment extends Fragment {
                 multiSheetView.expandSheet(MultiSheetView.Sheet.FIRST);
             }
         });
-        rootView.setOnTouchListener(new OnSwipeTouchListener(getActivity()));
+*/
 
         playPauseView.setOnClickListener(v -> {
             playPauseView.toggle();
-            playPauseView.postDelayed(() -> presenter.togglePlayback(), 200);
-        });*/
+          //  playPauseView.postDelayed(() -> presenter.togglePlayback(), 200);
+        });
 
-     //   progressBar.setMax(1000);
-
+        progressBar.setMax(100);
+        progressBar.setProgress(85);
        /* disposable.add(Aesthetic.get(getContext())
                 .colorPrimary()
                 .compose(distinctToMainThread())
@@ -138,11 +135,11 @@ public class MiniPlayerFragment extends Fragment {
         }
 
         void onSwipeLeft() {
-         //   presenter.skip();
+            Toast.makeText(getContext(), "onSwipeLeft", Toast.LENGTH_SHORT).show();
         }
 
         void onSwipeRight() {
-        //    presenter.prev(false);
+            Toast.makeText(getContext(), "onSwipeRight", Toast.LENGTH_SHORT).show();
         }
 
         public boolean onTouch(View v, MotionEvent event) {
@@ -152,6 +149,7 @@ public class MiniPlayerFragment extends Fragment {
             if (!consumed) {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     v.performClick();
+                    Toast.makeText(getContext(), "performClick", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -187,10 +185,7 @@ public class MiniPlayerFragment extends Fragment {
         }
     }
 
-  /*  @Override
-    protected String screenName() {
-        return TAG;
-    }
+
 
     PlayerViewAdapter playerViewAdapter = new PlayerViewAdapter() {
 
@@ -202,7 +197,7 @@ public class MiniPlayerFragment extends Fragment {
 
         @Override
         public void playbackChanged(boolean isPlaying) {
-            if (isPlaying) {
+    /*        if (isPlaying) {
                 if (playPauseView.isPlay()) {
                     playPauseView.toggle();
                 }
@@ -210,26 +205,28 @@ public class MiniPlayerFragment extends Fragment {
                 if (!playPauseView.isPlay()) {
                     playPauseView.toggle();
                 }
-            }
+            }*/
         }
 
         @Override
         public void trackInfoChanged(@Nullable Song song) {
 
-           *//* if (song == null) return;
+            if (song == null) return;
 
             trackName.setText(song.name);
             artistName.setText(String.format("%s | %s", song.artistName, song.albumName));
 
-            Glide.with(getContext())
+           /* Glide.with(getContext())
                     .load(song)
                     .priority(Priority.HIGH)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .placeholder(PlaceholderProvider.getInstance().getPlaceHolderDrawable(song.name, false))
                     .into(miniArtwork);
 
-            rootView.setContentDescription(getString(R.string.btn_now_playing, song.name, song.artistName));*//*
+            rootView.setContentDescription(getString(R.string.btn_now_playing, song.name, song.artistName));*/
+
+
 
         }
-    };*/
+    };
 }
