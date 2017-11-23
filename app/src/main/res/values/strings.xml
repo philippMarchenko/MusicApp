@@ -14,4 +14,7 @@
     <!-- Accessibility button description -->
     <!-- Accessibility button description -->
     <string name="btn_close">Close</string>
+
+    <string name="up_next_title">Up Next</string>
+
 </resources>

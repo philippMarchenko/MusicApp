@@ -18,6 +18,7 @@ import com.devphill.musicapp.R;
 import com.devphill.musicapp.model.Song;
 import com.devphill.musicapp.ui.view.PlayerViewAdapter;
 import com.ohoussein.playpause.PlayPauseView;
+import com.simplecity.multisheetview.ui.view.MultiSheetView;
 
 
 import butterknife.BindView;
@@ -67,13 +68,13 @@ public class MiniPlayerFragment extends Fragment {
 
         rootView.setOnTouchListener(new OnSwipeTouchListener(getActivity()));
 
-      /*  rootView.setOnClickListener(v -> {
+        rootView.setOnClickListener(v -> {
             MultiSheetView multiSheetView = MultiSheetView.getParentMultiSheetView(rootView);
             if (multiSheetView != null) {
                 multiSheetView.expandSheet(MultiSheetView.Sheet.FIRST);
             }
         });
-*/
+
 
         playPauseView.setOnClickListener(v -> {
             playPauseView.toggle();

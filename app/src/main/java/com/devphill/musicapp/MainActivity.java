@@ -9,13 +9,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.ViewGroup;
 
 import com.devphill.musicapp.ui.fragments.FragmentOne;
 import com.devphill.musicapp.ui.fragments.FragmentTwo;
 import com.devphill.musicapp.ui.fragments.MiniPlayerFragment;
+import com.devphill.musicapp.ui.view.UpNextView;
+import com.devphill.musicapp.ui.view.multisheet.CustomMultiSheetView;
+import com.simplecity.multisheetview.ui.view.MultiSheetView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -23,9 +30,13 @@ public class MainActivity extends AppCompatActivity {
 
     String LOG_TAG = "MainActivityTag";
 
+    public static final String STATE_CURRENT_SHEET = "current_sheet";
+
+
     FragmentTransaction ft;
 
     MiniPlayerFragment miniPlayerFragment;
+    FragmentOne fragmentOne;
 
     ViewPagerAdapter adapter;
 
@@ -33,13 +44,36 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
+    @BindView(R.id.multiSheetView)
+    CustomMultiSheetView multiSheetView;
+
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.fragment_main);
+
+        ButterKnife.bind(this);
 
         miniPlayerFragment = new MiniPlayerFragment();
+        fragmentOne = new FragmentOne();
 
-        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+
+        if (savedInstanceState == null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(multiSheetView.getSheetContainerViewResId(MultiSheetView.Sheet.FIRST), fragmentOne)
+                    .add(multiSheetView.getSheetPeekViewResId(MultiSheetView.Sheet.SECOND), miniPlayerFragment)
+                   // .add(multiSheetView.getSheetContainerViewResId(MultiSheetView.Sheet.SECOND), QueueFragment.newInstance())
+                    .commit();
+        } else {
+            multiSheetView.restoreSheet(savedInstanceState.getInt(STATE_CURRENT_SHEET));
+        }
+
+        ((ViewGroup) multiSheetView.findViewById(multiSheetView.getSheetPeekViewResId(MultiSheetView.Sheet.SECOND))).addView(new UpNextView(getBaseContext()));
+
+        toggleBottomSheetVisibility(false, false);
+
+      /*  adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -62,10 +96,19 @@ public class MainActivity extends AppCompatActivity {
 
         ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, miniPlayerFragment,"miniPlayerFragment");
-        ft.commit();
+        ft.commit();*/
         Log.d(LOG_TAG,"onCreate");
 
     }
+
+    private void toggleBottomSheetVisibility(boolean collapse, boolean animate) {
+ /*       if (MusicUtils.getQueue().isEmpty()) {
+            multiSheetView.hide(collapse, false);
+        } else if (MiniPlayerLockManager.getInstance().canShowMiniPlayer()) {
+            multiSheetView.unhide(animate);
+        }*/
+    }
+
     private void setupViewPager(ViewPager viewPager) {
 
         FragmentOne fragmentOne = new FragmentOne();

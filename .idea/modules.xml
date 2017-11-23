@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MusicApp.iml" filepath="$PROJECT_DIR$/MusicApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aesthetic/aesthetic.iml" filepath="$PROJECT_DIR$/aesthetic/aesthetic.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/multisheetview/multisheetview.iml" filepath="$PROJECT_DIR$/multisheetview/multisheetview.iml" />
     </modules>
   </component>
 </project>
